@@ -72,17 +72,11 @@ uint8_t uart0_reci_char(uint8_t* trigger){
 	uint32_t i;
 	uint8_t  data;
 
-	for (i = 0; i < 0xFBBB; i++){
-			if (UART0_S1 & UART0_S1_RDRF_MASK){			//iF Reciver Data Reg is Full
-					data = UART0_D;
-					*trigger = 1;												//Show recive a char
-					break;
-			}
+	if (UART0_S1 & UART0_S1_RDRF_MASK){			//if Reciver Data Reg is Full
+			data = UART0_D;
+			*trigger = 1;												//Show recive a char
 	}
-	if(i >= 0xFBBB){
-			data = 0xFF; 
-			*trigger = 0;    												//Did not recive a char
-	}
+
 	return data;
 }
 
