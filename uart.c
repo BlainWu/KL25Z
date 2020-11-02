@@ -60,16 +60,13 @@ uint8_t uart0_sent_string(char* str){
 	
 	for(i = 0; str[i] != '\0' ; i++)
 	{
-		if(!uart0_sent_char(str[i]))
+		if(!uart0_sent_char(str[i]))					//if fail sent a char,return 0
 			return 0;
 	}
-	
-	return 1;
-
+	return 1;																//sent a string successfully
 }
 
 uint8_t uart0_reci_char(uint8_t* trigger){
-	uint32_t i;
 	uint8_t  data;
 
 	if (UART0_S1 & UART0_S1_RDRF_MASK){			//if Reciver Data Reg is Full
@@ -80,4 +77,30 @@ uint8_t uart0_reci_char(uint8_t* trigger){
 	return data;
 }
 
+uint8_t uart0_reci_str(char* str){
 
+	uint8_t reci_flag = 0;
+	uint8_t ch;
+	if((ch = uart0_reci_char(&reci_flag)) && reci_flag){		//if recive a character
+		if(ch == 13){																					//if recive a Enter
+			uart0_sent_char('\r');
+			uart0_sent_char('\n');
+			return 1;																						//when a string is end, return 1
+		}
+		else if(ch == 8){																			//if recive a backspace
+		
+			if(strlen(str)>0){																	//if the str is not empty, delate the last char
+				str[strlen(str) - 1] = '\0';
+			}
+			
+			uart0_sent_char('\b');															//HERE maybe need to be a function as backspace
+			uart0_sent_char(' ');
+			uart0_sent_char('\b');
+		}
+		else{
+			str[strlen(str)] = ch;
+			uart0_sent_char(ch);
+		}
+	}
+	return 0;
+}

@@ -49,6 +49,14 @@ uint8_t uart0_sent_string(char* str);
 //===========================================
 uint8_t uart0_reci_char(uint8_t* trigger);
 
+//===========================================
+//Function name: uart0_reci_str
+//Describtion: 			Recive a character string
+//Parameters:				a empty str address
+//Function return: 	return a string(address of the first char)
+//===========================================
+uint8_t uart0_reci_str(char* str);
+
 
 
 # endif

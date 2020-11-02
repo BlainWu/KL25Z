@@ -18,11 +18,16 @@ int main(){
 	
 	while(1){
 	
-		uint8_t reci_flag = 0,ch;
-		if((ch = uart0_reci_char(&reci_flag)) && reci_flag){
-			uart0_sent_char(ch);
-			reci_flag = 0;
+		char str[100];
+		if(uart0_reci_str(str)){
+		
+			uart0_sent_string("The line is:");
+			uart0_sent_string(str);
+			
+			memset(str,0,strlen(str));					//GREAT! clear the string
+		
 		}
+	
 	}
 	
 	return 0;
