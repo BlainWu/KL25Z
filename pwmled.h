@@ -4,6 +4,6 @@
 #include "MKL25Z4.h"
 
 void pwmled_init();
-void pwmled_set(uint8_t duty_cycle,uint8_t colour);
+void pwmled_set(uint16_t duty_cycle,uint8_t colour);
 
 #endif

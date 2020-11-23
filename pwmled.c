@@ -1,5 +1,5 @@
 #include "pwmled.h"
-#define MOD_VALUE 9999
+#define MOD_VALUE 19999
 
 void pwmled_init(){
 	SIM_SCGC5 |= SIM_SCGC5_PORTB(1) + SIM_SCGC5_PORTD(1);	//enble portB portD
@@ -28,8 +28,8 @@ void pwmled_init(){
 	TPM2->SC = 0x08;
 }
 
-void pwmled_set(uint8_t duty_cycle,uint8_t colour){
-	uint8_t CnV_VALUE = duty_cycle * (MOD_VALUE+1) / 100;
+void pwmled_set(uint16_t duty_cycle,uint8_t colour){
+	uint16_t CnV_VALUE = duty_cycle * (MOD_VALUE+1) * 0.01;
 	switch(colour){
 		case 'R':
 		case 'r':
