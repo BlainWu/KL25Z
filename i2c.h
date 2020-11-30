@@ -30,6 +30,7 @@ void i2c_init(uint8_t mode);
 //Function name: 	i2c_signal
 //Describtion: 		send start or end signal;
 //Parameters:			's'(start)->start signal; 'o'(over)->over signal;
+//								'r'(restart)->restart signal;
 //Function return: None
 //===========================================
 void i2c_signal(uint8_t start_stop);
@@ -60,5 +61,14 @@ void i2c_wait();
 //								1 -> No Ack:Slave not response
 //===========================================
 int i2c_WrByte(char SlavAddr, char RegAddr, char Data);
+
+//===========================================
+//Function name: 	i2c_RdByte
+//Describtion: 		read a byte from slave
+//Parameters:			SlavAddr->7 bits address of slave
+//								RegAddr	->the register address to write
+//Function return:8 bit from slave device
+//===========================================
+unsigned char i2c_RdByte(char SlavAddr, char RegAddr);
 
 #endif

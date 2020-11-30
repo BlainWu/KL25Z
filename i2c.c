@@ -46,6 +46,17 @@ void i2c_signal(uint8_t start_stop){
 			I2C0_C1 |= I2C_C1_MST(0);
 			I2C0_C1 |= I2C_C1_TX(0);
 			break;
+		
+		case 'r':
+		case 'R':
+			//restart signal, it's different from start signal
+			I2C0_C1 |= I2C_C1_RSTA(1);
+			break;
+		
+		case 'c':
+		case 'C':
+			//change mode: change master as reciver; slave as transmiter
+			I2C0_C1 |= I2C_C1_TX(0);
 	}
 }
 
@@ -86,4 +97,78 @@ int i2c_WrByte(char SlavAddr, char RegAddr, char Data){
 	
 	Pause(50);
 	return NONE_ERR;
+}
+
+unsigned char i2c_RdByte(char SlavAddr, char RegAddr){
+
+	unsigned char data;
+	i2c_signal('s');//start signal
+	
+	//send slave address and write mode
+	I2C0_D = SlavAddr<<1;
+	i2c_wait();
+	
+	//send register address
+	I2C0_D = RegAddr;
+	i2c_wait();
+	
+	//send restart signal
+	i2c_signal('r');
+	
+	//send slave address and read mode
+	I2C0_C1 = (SlavAddr<<1) | 0x01;
+	i2c_wait();
+	
+	//change slave as a transmiter
+	i2c_signal('c');
+	I2C0_C1 |= I2C_C1_TXAK(1);//No ACK signal, prepare to stop
+	data = I2C0_D;//**dummy read to initiate bus read**
+	i2c_wait();
+	
+	//send stop signal
+	i2c_signal('o');
+	
+	data = I2C0_D;//real read
+	
+	Pause(50);
+	return data;
+}
+
+unsigned char i2c_RdMultiByte(char SlavAddr, char RegAddr, int nRd, char *buff){
+
+	unsigned char data;
+	int i;
+	
+	i2c_signal('s');
+	I2C0_D = SlavAddr<<1;
+	i2c_wait();
+	
+	I2C0_D = RegAddr;
+	i2c_wait();
+	
+	i2c_signal('r');
+	
+	I2C0_C1 = (SlavAddr<<1) | 0x01;
+	i2c_wait();
+	
+	i2c_signal('c');
+ 	I2C0_C1 |= I2C_C1_TXAK(0);//Enable master ACK signal, not to stop
+	
+	data = I2C0_D;//dummy read
+	i2c_wait();
+	//all above is same as i2c_RdByte
+	
+	for(i=0; i<nRd-2; i++){
+		*buff = I2C0_D;
+		buff++;
+	}
+	//when it's here, the last second one is in I2C0_D
+	I2C0_C1 |= I2C_C1_TXAK(1);//No ACK signal, prepare to stop
+	*buff = I2C0_D;
+	//after read the last 2nd, last one is read in I2C0_D and NACK is sent
+	buff++;
+	i2c_wait();
+	i2c_signal('o');
+	*buff = I2C0_D;
+	Pause(50);
 }
