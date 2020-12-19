@@ -8,8 +8,8 @@
 #ifndef _I2C_H
 #define _I2C_H
 
-#define SLAVE 0
-#define MASTER 1
+#define i2c_SLAVE 0
+#define i2c_MASTER 1
 
 #define NONE_ERR 0
 #define ERR_NO_ACK 0x01
@@ -21,7 +21,7 @@
 //===========================================
 //Function name: i2c_init
 //Describtion: initilize I2C0->PTE24 PTE25
-//Parameters:	mode-> SLAVE(0);MASTER(1)
+//Parameters:	mode-> i2c_SLAVE(0);i2c_MASTER(1)
 //Function return: None
 //===========================================
 void i2c_init(uint8_t mode);
@@ -49,7 +49,7 @@ void Pause(int number);
 //Parameters:			None
 //Function return:None 
 //===========================================
-void i2c_wait();
+void i2c_wait(void);
 
 //===========================================
 //Function name: 	i2c_WrByte
@@ -70,5 +70,7 @@ int i2c_WrByte(char SlavAddr, char RegAddr, char Data);
 //Function return:8 bit from slave device
 //===========================================
 unsigned char i2c_RdByte(char SlavAddr, char RegAddr);
+
+unsigned char i2c_RdMultiByte(char SlavAddr, char RegAddr, int nRd, char *buff);
 
 #endif

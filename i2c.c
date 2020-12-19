@@ -21,7 +21,7 @@ void i2c_init(uint8_t mode){
 	I2C0_S = I2C_S_IICIF(1);		//clear the interrupt (w1c)
 	I2C0_C1 = 0;
 	I2C0_C1 |= I2C_C1_IICEN(1);	//enbale I2C0
-	//select mode as Master or Slave
+	//select mode as i2c_Master or i2c_Slave
 	if(mode) I2C0_C1 |= I2C_C1_MST(1);
 	else	I2C0_C1 |= I2C_C1_MST(0);
 	
@@ -171,4 +171,5 @@ unsigned char i2c_RdMultiByte(char SlavAddr, char RegAddr, int nRd, char *buff){
 	i2c_signal('o');
 	*buff = I2C0_D;
 	Pause(50);
+	return data;
 }
