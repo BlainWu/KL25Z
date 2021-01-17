@@ -7,7 +7,7 @@
 //===============================
 
 # include "MMA8451Q.h"
-# include <stdio.h>
+
 
 unsigned char AccData[6];			//xyz_M_L
 short Xout_14_bit,Yout_14_bit,Zout_14_bit;
@@ -19,16 +19,14 @@ void Acc_init(void){
 
 	unsigned char reg_val = 0;
 	int errCode;
-
+	
 	errCode = i2c_WrByte(MMA_I2C_ADDRESS,CTRL_REG2,0x40);	//device reset
-	if(errCode != 0){
-		char err_msg[100];
-		sprintf(err_msg,"Write operation failed. Error code:%d \r\n",errCode);
-		uart0_sent_string(err_msg);
+	if(errCode){
+		uart0_sent_string("Write operation failed.\r\n");
 	}
 	
 	do{		//wait for the Reset 
-		reg_val = i2c_RdByte(MMA_I2C_ADDRESS,	CTRL_REG2) & 0x40;
+	reg_val = i2c_RdByte(MMA_I2C_ADDRESS,	CTRL_REG2) & 0x40;
 	}while(reg_val);
 	
 	i2c_WrByte(MMA_I2C_ADDRESS,XYZ_DATA_CFG_REG,0x00);//Full scale = 2g
@@ -37,17 +35,18 @@ void Acc_init(void){
 
 }
 
+
+
 void readAccXYZ(void){
 
+	int n;
 	unsigned char reg_val = 0;
-
 	while(!reg_val){	//XYZ Data Ready
-		reg_val = i2c_RdByte(MMA_I2C_ADDRESS,STATUS_REG) & 0x08;
+		reg_val = i2c_RdByte(MMA_I2C_ADDRESS,OUT_X_MSB_REG) & 0x08;
 	}
-
 	//if ready, read 6 byte data
-	i2c_RdMultiBytes(MMA_I2C_ADDRESS,OUT_X_MSB_REG,6,AccData);
-
+	i2c_RdMultiByte(MMA_I2C_ADDRESS,OUT_X_MSB_REG,6,AccData);
+	
 	Xout_14_bit = ((short) (AccData[0]<<8 | AccData[1]))>>2;
 	Yout_14_bit = ((short) (AccData[2]<<8 | AccData[3]))>>2;
 	Zout_14_bit = ((short) (AccData[4]<<8 | AccData[5]))>>2;

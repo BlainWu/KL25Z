@@ -6,29 +6,30 @@
 //E-mail: p.wu@northumbria.ac.uk
 //===============================
 
+#include "pwmled.h"
 #include "uart.h"
+#include "i2c.h"
+#include "MMA8451Q.H"
+#include <string.h>
+
 
 int main(){
-
-	uart0_init(38400);
 	
-	char msg[] = "Northumbria University!!!\r\n";
-
-	uart0_sent_string(msg);
+	uart0_init(38400);		//baud rate 38400
+	pwmled_init();
+	i2c_init(i2c_MASTER);
+	Acc_init();
+	
+	uart0_sent_string("Finshed initialzation\r\n");
+	
+	short Xout_14_bit,Yout_14_bit,Zout_14_bit;
+	char out_info[100];
+	
 	
 	while(1){
-	
-		char str[100];
-		if(uart0_reci_str(str)){
-		
-			uart0_sent_string("The line is:");
-			uart0_sent_string(str);
-			
-			memset(str,0,strlen(str));					//GREAT! clear the string
-		
-		}
-	
+		//readAccXYZ();
+		//uart0_sent_string(Xout_14_bit);
 	}
-	
-	return 0;
+
 }
+
