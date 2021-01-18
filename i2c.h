@@ -31,7 +31,6 @@
 //===========================================
 //Function name: i2c_init
 //Describtion: initilize I2C0->PTE24 PTE25
-//Function return: None
 //===========================================
 void i2c_init(void);
 	
@@ -40,7 +39,6 @@ void i2c_init(void);
 //Describtion: 		send start or end signal;
 //Parameters:			's'(start)->start signal; 'o'(over)->over signal;
 //								'r'(restart)->restart signal;
-//Function return: None
 //===========================================
 void i2c_start(void);   	
 
@@ -60,14 +58,12 @@ int i2c_WrByte(unsigned char SlaveAddr, unsigned char RegAddr, char Data);
 //Describtion: 		read a byte from slave
 //Parameters:			SlavAddr->7 bits address of slave
 //								RegAddr	->the register address to write
-//Function return:8 bit from slave device
 //===========================================
 unsigned char i2c_RdByte(unsigned char SlaveAddr, unsigned char RegAddr);
 
 //===========================================
 //Function name: i2c_RdMultiBytes
 //Describtion: Read n bytes data from slave to r
-//Function return: None
 //===========================================
 void i2c_RdMultiBytes(unsigned char SlaveAddr, unsigned char RegAddr, unsigned char n, unsigned char *r);
 
@@ -75,8 +71,6 @@ void i2c_RdMultiBytes(unsigned char SlaveAddr, unsigned char RegAddr, unsigned c
 //Function name: Pause
 //Describtion: 	execute very times of nop
 //Parameters:		nop times
-//Function return: None
 //===========================================
 void Pause(int number);
-	
 #endif

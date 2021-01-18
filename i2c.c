@@ -1,3 +1,10 @@
+//===============================
+//Author: Peilin Wu
+//Data: 24/11/2020
+//Descibtion: i2c module source file
+//Student Number: 17049125
+//E-mail: p.wu@northumbria.ac.uk
+//===============================
 #include <MKL25Z4.H>
 #include "i2c.h"
 
@@ -103,10 +110,10 @@ void i2c_RdMultiBytes(unsigned char SlaveAddr, unsigned char RegAddr, unsigned c
 	char i;
 	I2C_Start();	  
 	
-	I2C0_D = SlaveAddr << 1;	//Send I2C device address with W/R bit = 0	
+	I2C0_D = SlaveAddr << 1;				//Send I2C device address with W/R bit = 0	
 	I2C_Wait();										
 
-	I2C0_D = RegAddr;		// Send register address
+	I2C0_D = RegAddr;								// Send register address
 	I2C_Wait();
 
 	I2C_RepeatedStart();
@@ -119,7 +126,6 @@ void i2c_RdMultiBytes(unsigned char SlaveAddr, unsigned char RegAddr, unsigned c
 	
 	i = I2C0_D;										//dummy read
 	I2C_Wait();
-	
 	for(i=0; i<n-2; i++) 
 	{
 	    *r = I2C0_D;
@@ -129,8 +135,7 @@ void i2c_RdMultiBytes(unsigned char SlaveAddr, unsigned char RegAddr, unsigned c
 	//when it's here, the last second one is in I2C0_D
 	I2C_DisableAck();
 	*r = I2C0_D;
-	//after read the last 2nd, last one is read in I2C0_D and NACK is sent
-	r++;
+	r++;//after read the last 2nd, last one is read in I2C0_D and NACK is sent
 	I2C_Wait();
 	I2C_Stop();
 	*r = I2C0_D; 

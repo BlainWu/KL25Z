@@ -20,7 +20,6 @@
 //===========================================
 void uart0_init(uint16_t baud_rate);
 
-
 //===========================================
 //Function name: uart_sent_char
 //Describtion: 			Sent one character
@@ -30,7 +29,6 @@ void uart0_init(uint16_t baud_rate);
 //===========================================
 uint8_t uart0_sent_char(uint8_t ch);
 
-
 //===========================================
 //Function name: uart0_sent_string
 //Describtion: 			Sent a string
@@ -39,7 +37,6 @@ uint8_t uart0_sent_char(uint8_t ch);
 //								 0 -> fail to sent
 //===========================================
 uint8_t uart0_sent_string(char* str);
-
 
 //===========================================
 //Function name: uart0_reci_char

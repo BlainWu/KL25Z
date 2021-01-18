@@ -1,7 +1,7 @@
 //===============================
 //Author: Peilin Wu
 //Data: 23/11/2020
-//Descibtion: PWM signal light LED on KL25Z source file
+//Descibtion: PWM-LED module header file
 //Student Number: 17049125
 //E-mail: p.wu@northumbria.ac.uk
 //===============================

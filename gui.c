@@ -4,9 +4,7 @@
 //Descibtion: GUI module source file
 //E-mail: p.wu@northumbria.ac.uk
 //===============================
-
 #include "gui.h"
-
 
 void GUI_init(void){
 	uart0_sent_string("\33[2J \33[1;1H");	//Clear the screen and set cursor at (1,1)
