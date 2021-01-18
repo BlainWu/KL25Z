@@ -16,7 +16,7 @@
 //Parameters: None
 //Function return: None
 //===========================================
-void pwmled_init();
+void pwmled_init(void);
 
 //===========================================
 //Function name: pwmled_set
@@ -25,6 +25,16 @@ void pwmled_init();
 //							colour:			r/R g/G b/B
 //Function return: None
 //===========================================
-void pwmled_set(uint16_t duty_cycle,uint8_t colour);
+void pwmled_set(short duty_cycle,uint8_t colour);
+
+//===========================================
+//Function name: pwmled_update
+//Describtion: 
+//Parameters:		X:Dutycycle of Red LED
+//							Y:Dutycycle of Green LED
+//							Z:Dutycycle of Blue LED
+//Function return: None
+//===========================================
+void pwmled_update(short X, short Y, short Z);
 
 #endif

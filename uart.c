@@ -5,9 +5,7 @@
 //Student Number: 17049125
 //E-mail: p.wu@northumbria.ac.uk
 //===============================
-
 # include "uart.h"
-
 
 void uart0_init(uint16_t baud_rate){
 	
@@ -34,8 +32,6 @@ void uart0_init(uint16_t baud_rate){
 	UART0_C2 |= UART0_C2_RE(0x01);						//Receiver enable
 }
 
-
-
 uint8_t uart0_sent_char(uint8_t ch){
 		
 	uint32_t i;
@@ -45,8 +41,7 @@ uint8_t uart0_sent_char(uint8_t ch){
 			UART0_D = ch;
 			break;																	//break the check loop
 		}
-	}
-	if(i >= 0xffff){														//fail to sent the char
+	}	if(i >= 0xffff){														//fail to sent the char
 		return 0;
 	}
 	else
@@ -81,7 +76,8 @@ uint8_t uart0_reci_str(char* str){
 
 	uint8_t reci_flag = 0;
 	uint8_t ch;
-	if((ch = uart0_reci_char(&reci_flag)) && reci_flag){		//if recive a character
+	ch = uart0_reci_char(&reci_flag);
+	if(reci_flag){		//if recive a character
 		if(ch == 13){																					//if recive a Enter
 			uart0_sent_char('\r');
 			uart0_sent_char('\n');

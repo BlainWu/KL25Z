@@ -35,7 +35,7 @@ void pwmled_init(){
 	TPM2->SC = 0x08;
 }
 
-void pwmled_set(uint16_t duty_cycle,uint8_t colour){
+void pwmled_set(short duty_cycle,uint8_t colour){
 	uint16_t CnV_VALUE = duty_cycle * (MOD_VALUE+1) * 0.01;
 	switch(colour){
 		case 'R':
@@ -53,4 +53,11 @@ void pwmled_set(uint16_t duty_cycle,uint8_t colour){
 			TPM0->CONTROLS[1].CnV = CnV_VALUE;
 			break;
 	}
+}
+
+void pwmled_update(short X, short Y, short Z){
+	pwmled_set(X,'r');
+	pwmled_set(Y,'g');
+	pwmled_set(Z,'b');
+	
 }

@@ -10,7 +10,7 @@
 # define _UART_H
 
 #include "MKL25Z4.h"
-
+#include "string.h"
 
 //===========================================
 //Function name: uart_init
@@ -56,8 +56,6 @@ uint8_t uart0_reci_char(uint8_t* trigger);
 //Function return: 	return a string(address of the first char)
 //===========================================
 uint8_t uart0_reci_str(char* str);
-
-
 
 # endif
 

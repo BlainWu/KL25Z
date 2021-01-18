@@ -1,8 +1,6 @@
 #ifndef _MMA8451Q_H
 #define _MMA8451Q_H
 
-//MMA8451Q Registers
-
 #define STATUS_REG            0x00		
 
 #define OUT_X_MSB_REG         0x01		
@@ -59,14 +57,17 @@
 
 #define MMA_I2C_ADDRESS   0x1D		// SA0 pin = 1 -> 7-bit I2C address is 0x1D 
 
-
 #include "MKL25Z4.h"
 #include "i2c.h"
+#include "uart.h"
 
 
 void Acc_init(void);
 
 void readAccXYZ(void);
 
-#endif
+short cal_density(short origin_out);
 
+void split_short(short origin);
+
+#endif
