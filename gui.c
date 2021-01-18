@@ -28,6 +28,7 @@ void GUI_update(short X,short Y, short Z,char Xout_g_S,short Xout_g_int,short Xo
 
 	char buf[100];
 	uart0_sent_string("\33[9;22H \33[9;36H \33[9;50H \033[0m");//clear the highest postion
+	uart0_sent_string("\33[7;21H \33[7;35H \33[7;48H \033[0m");//clear the highest postion
 	sprintf(buf,"\33[9;20H\33[31m%2d\33[9;34H\33[32m%2d\33[9;48H\33[34m%2d\033[0m",X,Y,Z);//update value density
 	uart0_sent_string(buf);
 									
@@ -39,5 +40,6 @@ void GUI_update(short X,short Y, short Z,char Xout_g_S,short Xout_g_int,short Xo
 									
 	sprintf(buf,"\33[7;43H%c%d.%d%d\033[?25l",Zout_g_S,Zout_g_int,Zout_g_dec1,Zout_g_dec2);//update value density
 	uart0_sent_string(buf);
+								
 	
 }

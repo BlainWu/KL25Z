@@ -36,6 +36,8 @@ void Acc_init(void){
 	
 	i2c_WrByte(MMA_I2C_ADDRESS,XYZ_DATA_CFG_REG,0x00);//Full scale = 2g
 	i2c_WrByte(MMA_I2C_ADDRESS,CTRL_REG2,0x02);				//High resolution mode
+	i2c_WrByte(MMA_I2C_ADDRESS,CTRL_REG4,0x01);				//INT_EN_DRDY
+	i2c_WrByte(MMA_I2C_ADDRESS,CTRL_REG5,0x01);				//daty ready interrupt to A14 pin
 	//i2c_WrByte(MMA_I2C_ADDRESS,CTRL_REG1,0x3D);				//ODR=1.56HZ,Active mode, reduced noise
 	//i2c_WrByte(MMA_I2C_ADDRESS,CTRL_REG1,0x25);				//ODR=50HZ,Active mode, reduced noise
 	i2c_WrByte(MMA_I2C_ADDRESS,CTRL_REG1,0x2D);				//ODR=12.5HZ,Active mode, reduced noise
